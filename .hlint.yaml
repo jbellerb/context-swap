@@ -1,0 +1,22 @@
+- extensions:
+  - default: false
+  - name: [DefaultSignatures, OverloadedStrings, UndecidableInstances]
+  - name: CPP
+    within: System.Boot.UEFI.Internal
+  - name: [ForeignFunctionInterface, TemplateHaskell]
+    within: System.Boot.UEFI.Internal.Ioctl
+
+- modules:
+  - name: Data.ByteString
+    as: BS
+  - name: [Data.Text, Data.Text.IO]
+    as: T
+  - name: '**'
+    importStyle: explicitOrQualified
+
+- group:
+    name: future
+    enabled: true
+- group:
+    name: generalise
+    enabled: true

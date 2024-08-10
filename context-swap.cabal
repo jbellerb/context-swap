@@ -1,0 +1,76 @@
+cabal-version:      3.0
+name:               context-swap
+version:            0.1.0
+build-type:         Simple
+license:            GPL-3.0-or-later
+license-file:       LICENSE
+copyright:          (c) 2024 jae beller
+author:             jae beller
+maintainer:         foss@jae.zone
+category:           System
+extra-doc-files:    CHANGELOG.md
+synopsis:           Modify UEFI boot order and hibernate.
+description:        A command-line tool for modifying UEFI boot order and
+                    hibernating.
+
+                    The vast majority of this package is tools to interface with
+                    getting and setting UEFI variables. Platform differences are
+                    abstracted away under various "backends" which expose basic
+                    functions for getting, setting, and clearing variables.
+                    In contrast to the UEFI implementation, hibernation is
+                    extremely simple. Right now, hibernation simply calls ZZZ
+                    on unix-like systems. I may make this more robust in the
+                    future, but it works pretty well right now. None of the
+                    library code is really intended to be used outside of this
+                    specific tool, but I tried to keep things clean and decently
+                    documented. Hopefully someone finds this useful.
+
+                    == System Support
+
+                    Right now only OpenBSD is supported (although the
+                    ioctl-based implementation for that should work on other
+                    BSDs, I just haven't tested it). I will make additional
+                    backends as-needed while I experiment more with this tool.
+                    For more information, see "System.Boot.UEFI.Internal".
+
+common warnings
+    ghc-options: -Wall
+
+library
+    default-language: GHC2021
+    hs-source-dirs:   src
+
+    build-depends:
+      base ^>=4.18,
+      bytestring,
+      mtl,
+      process,
+      template-haskell,
+      text,
+      unix
+    build-tool-depends: c2hs:c2hs
+
+    exposed-modules:
+      Data.UUID,
+      System.Boot.UEFI,
+      System.Boot.UEFI.Internal,
+      System.Boot.UEFI.Internal.Ioctl,
+      System.Boot.UEFI.Internal.Ioctl.TH,
+      System.Hibernate
+
+executable cswap
+    main-is:          Main.hs
+    default-language: GHC2021
+    hs-source-dirs:   app
+
+    build-depends:
+      base ^>=4.18,
+      bytestring,
+      context-swap,
+      mtl,
+      text
+
+    other-modules:
+      App.Monad,
+      App.Options,
+      Paths_context_swap
