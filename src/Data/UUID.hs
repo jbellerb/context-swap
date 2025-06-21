@@ -52,14 +52,14 @@ data UUID = UUID
     deriving (Eq, Ord)
 
 instance Show UUID where
-    show uuid = showWord 32 (uuidTimeLow uuid) $ showChar '-'
-        $ showWord 16 (uuidTimeMid uuid) $ showChar '-'
-        $ showWord 16 (uuidTimeHiAndVersion uuid) $ showChar '-'
-        $ showWord 8 (uuidClockSeqHiAndReserved uuid)
-        $ showWord 8 (uuidClockSeqLow uuid) $ showChar '-'
-        $ showWord 8 (uuidNode0 uuid) $ showWord 8 (uuidNode1 uuid)
-        $ showWord 8 (uuidNode2 uuid) $ showWord 8 (uuidNode3 uuid)
-        $ showWord 8 (uuidNode4 uuid) $ showWord 8 (uuidNode5 uuid) ""
+    showsPrec _ uuid = showWord 32 (uuidTimeLow uuid) . showChar '-'
+        . showWord 16 (uuidTimeMid uuid) . showChar '-'
+        . showWord 16 (uuidTimeHiAndVersion uuid) . showChar '-'
+        . showWord 8 (uuidClockSeqHiAndReserved uuid)
+        . showWord 8 (uuidClockSeqLow uuid) . showChar '-'
+        . showWord 8 (uuidNode0 uuid) . showWord 8 (uuidNode1 uuid)
+        . showWord 8 (uuidNode2 uuid) . showWord 8 (uuidNode3 uuid)
+        . showWord 8 (uuidNode4 uuid) . showWord 8 (uuidNode5 uuid)
       where
         showWord len word s = foldr ((:) . hexChar word) s [len-4,len-8..0]
         hexChar word offset =

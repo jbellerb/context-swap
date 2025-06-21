@@ -25,7 +25,7 @@ import Control.Monad.Reader (MonadReader, ReaderT, runReaderT)
 import Data.Text (Text)
 import Data.Text.IO (hPutStrLn)
 import System.Boot.UEFI (MonadEfi)
-import System.Boot.UEFI.Internal.Ioctl (EfiT, runEfiT)
+import System.Boot.UEFI.Internal (EfiT, runEfiT)
 import System.Exit (exitFailure)
 import System.IO (stderr)
 

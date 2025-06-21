@@ -26,7 +26,9 @@ module System.Boot.UEFI.Internal
     , runEfiT
     ) where
 
-#if defined(openbsd_HOST_OS) || defined(freebsd_HOST_OS) \
+#if defined(linux_HOST_OS)
+import System.Boot.UEFI.Internal.Efivarfs (EfiT (..), runEfiT)
+#elif defined(openbsd_HOST_OS) || defined(freebsd_HOST_OS) \
     || defined(netbsd_HOST_OS) || defined(dragonflybsd_HOST_OS)
 import System.Boot.UEFI.Internal.Ioctl (EfiT (..), runEfiT)
 #endif
@@ -35,11 +37,12 @@ import System.Boot.UEFI.Internal.Ioctl (EfiT (..), runEfiT)
 
 The following backends are currently provided:
 
-+-----------------------------------+-----------+-----------+
-| Implementation                    | Target OS | Quality   |
-+===================================+===========+===========+
-| "System.Boot.UEFI.Internal.Ioctl" | OpenBSD¹  | Excellent |
-+-----------------------------------+-----------+-----------+
++--------------------------------------+-----------+-----------+
+| Implementation                       | Target OS | Quality   |
++======================================+===========+===========+
+| "System.Boot.UEFI.Internal.Efivarfs" | Linux     | Good      |
+| "System.Boot.UEFI.Internal.Ioctl"    | OpenBSD¹  | Excellent |
++--------------------------------------+-----------+-----------+
 
 ¹ /Experimental (untested) support is also provided for FreeBSD, NetBSD, and \
 DragonflyBSD./

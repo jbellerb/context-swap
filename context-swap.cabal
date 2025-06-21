@@ -45,18 +45,28 @@ library
       bytestring,
       mtl,
       process,
-      template-haskell,
-      text,
-      unix
-    build-tool-depends: c2hs:c2hs
+      text
 
     exposed-modules:
       Data.UUID,
       System.Boot.UEFI,
       System.Boot.UEFI.Internal,
-      System.Boot.UEFI.Internal.Ioctl,
-      System.Boot.UEFI.Internal.Ioctl.TH,
       System.Hibernate
+
+    if os(linux)
+      other-modules:
+        System.Boot.UEFI.Internal.Efivarfs
+      build-depends:
+        directory
+
+    if os(openbsd) || os(freebsd) || os(netbsd) || os(dragonflybsd)
+      other-modules:
+        System.Boot.UEFI.Internal.Ioctl,
+        System.Boot.UEFI.Internal.Ioctl.TH
+      build-depends:
+        template-haskell,
+        unix
+      build-tool-depends: c2hs:c2hs
 
 executable cswap
     main-is:          Main.hs

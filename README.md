@@ -35,14 +35,16 @@ more.
 | OS | Support Level | Notes |
 | --- | --- | --- |
 | OpenBSD | Full | 1 |
-| Windows | Planned | 2 |
-| FreeBSD | Experimental | 3 |
+| Linux | Experimental | 2 |
+| Windows | Planned | 3 |
+| FreeBSD | Experimental | 4 |
 | NetBSD | Experimental | |
-| DragonflyBSD | Experimental | 3 |
+| DragonflyBSD | Experimental | 4 |
 
 <sup>1</sup> To modify UEFI variables at runtime, `kern.securelevel` must be set to -1.\
-<sup>2</sup> UEFI variables may only be modified on Windows 10 and later.\
-<sup>3</sup> The `efirt` driver must be compiled into your kernel or `efirt_load="YES"`
+<sup>2</sup> The system must use systemd and support hibernation (i.e. have working swap).\
+<sup>3</sup> UEFI variables may only be modified on Windows 10 and later.\
+<sup>4</sup> The `efirt` driver must be compiled into your kernel or `efirt_load="YES"`
 must be set in your `loader.conf`.
 
 ## Usage
